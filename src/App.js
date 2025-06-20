@@ -15,7 +15,7 @@ const App = () => {
   const [data, setData] = useState({});
 
   const handleChange = (key, value) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       [key]: value
     }));
@@ -23,15 +23,18 @@ const App = () => {
 
   const generateMessage = () => {
     let message = `Stock Dispatch Report\nDate: ${date}\n\n`;
-    stockItems.forEach(item => {
+    stockItems.forEach((item) => {
       if (item.type === "header") {
         message += `\n== ${item.label} ==\n`;
       } else {
         const outlets = ["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"];
-        const line = outlets.map(outlet => {
-          const key = item.name + "-" + outlet;
-          return `${outlet.slice(0, 3)}: ${data[key] || 0}`;
-        }).join(", ");
+        const line = outlets
+          .map((outlet) => {
+            const key = item.name + "-" + outlet;
+            const val = data[key] || 0;
+            return outlet.slice(0, 3) + ": " + val;
+          })
+          .join(", ");
         message += `${item.name} (${item.unit}): ${line}\n`;
       }
     });
@@ -47,29 +50,33 @@ const App = () => {
     <div className="app">
       <div className="header">
         <label>Date: </label>
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
-      {stockItems.map((item, idx) => item.type === "header" ? (
-        <div key={idx} className="category-header">{item.label}</div>
-      ) : (
-        <div key={idx} className="item-row">
-          <div>{item.name} ({item.unit})</div>
-          <div className="inputs">
-            {["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"].map(outlet => {
-              const key = item.name + "-" + outlet;
-              return (
-                <input
-                  key={key}
-                  type="number"
-                  placeholder={outlet}
-                  value={data[key] || ""}
-                  onChange={e => handleChange(key, e.target.value)}
-                />
-              );
-            })}
+      {stockItems.map((item, idx) =>
+        item.type === "header" ? (
+          <div key={idx} className="category-header">
+            {item.label}
           </div>
-        </div>
-      ))}
+        ) : (
+          <div key={idx} className="item-row">
+            <div>{item.name} ({item.unit})</div>
+            <div className="inputs">
+              {["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"].map((outlet) => {
+                const key = item.name + "-" + outlet;
+                return (
+                  <input
+                    key={key}
+                    type="number"
+                    placeholder={outlet}
+                    value={data[key] || ""}
+                    onChange={(e) => handleChange(key, e.target.value)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )
+      )}
       <button onClick={openWhatsApp}>Send on WhatsApp</button>
     </div>
   );
