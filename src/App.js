@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 const stockItems = [
@@ -74,9 +73,8 @@ const stockItems = [
   { type: "item", name: "Staeppler Pins", unit: "Box" },
   { type: "item", name: "Tape", unit: "Pcs" },
   { type: "header", label: "Garbage Bag" },
-  { type: "item", name: "Garbage Bag - 24 X 32", unit: "Box" },
+  { type: "item", name: "Garbage Bag - 24 X 32", unit: "Box" }
 ];
-
 
 const App = () => {
   const [date, setDate] = useState(() => new Date().toISOString().substring(0, 10));
