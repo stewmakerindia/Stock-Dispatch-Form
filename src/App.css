@@ -1,37 +1,77 @@
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff8f2;
+  color: #3e3e3e;
   margin: 0;
   padding: 1rem;
-  background-color: #fffaf0;
-  color: #3e3e3e;
+}
+
+.app {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 50px;
 }
 
 h1 {
-  color: #b44632;
+  color: #a33d2a;
+  font-size: 1.8rem;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 button {
-  background-color: #e28b6d;
-  border: none;
-  padding: 8px 12px;
+  background-color: #c9553d;
   color: white;
-  margin-left: 10px;
+  border: none;
+  padding: 6px 12px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 th, td {
   border: 1px solid #ddd;
   padding: 6px;
+  text-align: center;
 }
 
-input[type="text"] {
-  width: 80px;
+.category {
+  background-color: #fae1d5;
+  padding: 10px;
+  margin-top: 1rem;
+  color: #8d2c1f;
+}
+
+.qty-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.qty-cell button {
+  padding: 2px 6px;
+  font-size: 14px;
+  background-color: #e28b6d;
 }
