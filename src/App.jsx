@@ -66,10 +66,12 @@ function App() {
                 <tr key={item}>
                   <td>{item}</td>
                   {outlets.map(outlet => (
-                    <td key={outlet} className="qty-cell">
-                      <button onClick={() => adjustQty(item, outlet, -1)}>-</button>
-                      <span>{data[item]?.[outlet] || 0}</span>
-                      <button onClick={() => adjustQty(item, outlet, 1)}>+</button>
+                    <td key={outlet}>
+                      <div className="qty-cell">
+                        <button onClick={() => adjustQty(item, outlet, -1)}>-</button>
+                        <span>{data[item]?.[outlet] || 0}</span>
+                        <button onClick={() => adjustQty(item, outlet, 1)}>+</button>
+                      </div>
                     </td>
                   ))}
                 </tr>
