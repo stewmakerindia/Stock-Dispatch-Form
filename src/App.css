@@ -1,8 +1,8 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fff8f2;
-  color: #3e3e3e;
+  background-color: #ffffff;
+  color: #252525;
   margin: 0;
   padding: 1rem;
 }
@@ -24,7 +24,7 @@ body {
 }
 
 h1 {
-  color: #a33d2a;
+  color: #bd202f;
   font-size: 1.8rem;
 }
 
@@ -36,7 +36,7 @@ h1 {
 }
 
 button {
-  background-color: #c9553d;
+  background-color: #293373;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -57,10 +57,11 @@ th, td {
 }
 
 .category {
-  background-color: #fae1d5;
+  background-color: #f4f4f4;
   padding: 10px;
   margin-top: 1rem;
-  color: #8d2c1f;
+  color: #293373;
+  border-left: 4px solid #bd202f;
 }
 
 .qty-cell {
@@ -73,5 +74,8 @@ th, td {
 .qty-cell button {
   padding: 2px 6px;
   font-size: 14px;
-  background-color: #e28b6d;
+  background-color: #bd202f;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
 }
