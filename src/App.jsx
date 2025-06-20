@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import logo from './logo.png';
 
 const masterData = [
   { category: "Meat & Eggs", items: ["Chicken", "Mutton", "Eggs", "Prawns"] },
@@ -46,10 +45,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="header">
-        <img src={logo} alt="Stewmaker Logo" className="logo" />
-        <h1>Stock Dispatch</h1>
-      </div>
+      <h1>Stock Dispatch</h1>
       <div className="date-row">
         <label>Date: </label>
         <input type="date" value={date} onChange={e => setDate(e.target.value)} />

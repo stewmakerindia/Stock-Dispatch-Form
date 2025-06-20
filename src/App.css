@@ -12,17 +12,6 @@ body {
   margin: auto;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.logo {
-  width: 50px;
-}
-
 h1 {
   color: #bd202f;
   font-size: 1.8rem;
