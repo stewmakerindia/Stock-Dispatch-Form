@@ -1,85 +1,78 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import './App.css';
 
-const stockItems = [
-  { type: "header", label: "Meat & Eggs" },
-  { type: "item", name: "Chicken", unit: "Kg" },
-  { type: "item", name: "Mutton", unit: "Kg" },
-  { type: "item", name: "Eggs", unit: "Tray" },
-  { type: "header", label: "Rice" },
-  { type: "item", name: "Appam Rice", unit: "Bori" },
-  { type: "item", name: "Ghee Rice", unit: "Bori" }
+const items = [
+  "Chicken", "Mutton", "Eggs", "Prawns", "Coconut", "Potato", "Beans", "Onion",
+  "Small Onion", "Carrot", "Ginger", "Raw Mango", "Peeled Garlic", "Mushroom",
+  "Bread", "Bread Powder", "Instant Dry Yeast", "Chips", "Maida", "Pickles",
+  "Coconut Powder", "Magic Masala", "Soya Granules", "Garam Masala",
+  "Chilli Powder", "Turmeric Powder", "Salt", "Sugar", "Vinegar", "Cloves",
+  "Cardamom", "Black Pepper", "Cinnamon", "Dry Chilli", "Dry Chilli Round",
+  "Whole Coriander", "Fennel", "Raisins", "Cashew", "Sunflower Oil",
+  "Coconut Oil", "Ghee", "Appam Rice", "Ghee Rice", "Chicken Cutlets",
+  "Veg Cutlets", "Roast Masala", "Barrista", "Banana Leaf", "Appam Box",
+  "SM Bag", "SM Bag (w/o handle)", "Railway Meal Cover", "Cutlet Box",
+  "500ml container", "500g container", "Chutney Box", "Silver Pouch - 9X12",
+  "Silver Pouch - 6X9", "Staeppler Pins", "Tape", "Garbage Bag - 24 X 32"
 ];
 
-const App = () => {
-  const [date, setDate] = useState(() => new Date().toISOString().substring(0, 10));
+const outlets = ["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"];
+
+function App() {
+  const [date, setDate] = useState('');
   const [data, setData] = useState({});
 
-  const handleChange = (key, value) => {
-    setData((prev) => ({
+  const handleChange = (item, outlet, value) => {
+    setData(prev => ({
       ...prev,
-      [key]: value
+      [item]: { ...prev[item], [outlet]: value }
     }));
   };
 
-  const generateMessage = () => {
-    let message = `Stock Dispatch Report\nDate: ${date}\n\n`;
-    stockItems.forEach((item) => {
-      if (item.type === "header") {
-        message += `\n== ${item.label} ==\n`;
-      } else {
-        const outlets = ["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"];
-        const line = outlets
-          .map((outlet) => {
-            const key = item.name + "-" + outlet;
-            const val = data[key] || 0;
-            return outlet.slice(0, 3) + ": " + val;
-          })
-          .join(", ");
-        message += `${item.name} (${item.unit}): ${line}\n`;
-      }
+  const sendWhatsapp = () => {
+    let message = `🧾 *Stock Dispatch - ${date}*\n\n`;
+    items.forEach(item => {
+      const row = data[item] || {};
+      message += `*${item}* - ${outlets.map(outlet => `${outlet}: ${row[outlet] || 0}`).join(', ')}\n`;
     });
-    return encodeURIComponent(message);
-  };
-
-  const openWhatsApp = () => {
-    const url = "https://wa.me/?text=" + generateMessage();
-    window.open(url, "_blank");
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encoded}`, '_blank');
   };
 
   return (
     <div className="app">
+      <h1>Stewmaker Stock Dispatch</h1>
       <div className="header">
         <label>Date: </label>
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+        <button onClick={sendWhatsapp}>Send via WhatsApp</button>
       </div>
-      {stockItems.map((item, idx) =>
-        item.type === "header" ? (
-          <div key={idx} className="category-header">
-            {item.label}
-          </div>
-        ) : (
-          <div key={idx} className="item-row">
-            <div>{item.name} ({item.unit})</div>
-            <div className="inputs">
-              {["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"].map((outlet) => {
-                const key = item.name + "-" + outlet;
-                return (
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            {outlets.map(outlet => <th key={outlet}>{outlet}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {items.map(item => (
+            <tr key={item}>
+              <td>{item}</td>
+              {outlets.map(outlet => (
+                <td key={outlet}>
                   <input
-                    key={key}
-                    type="number"
-                    placeholder={outlet}
-                    value={data[key] || ""}
-                    onChange={(e) => handleChange(key, e.target.value)}
+                    type="text"
+                    value={data[item]?.[outlet] || ''}
+                    onChange={e => handleChange(item, outlet, e.target.value)}
                   />
-                );
-              })}
-            </div>
-          </div>
-        )
-      )}
-      <button onClick={openWhatsApp}>Send on WhatsApp</button>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-};
+}
 
 export default App;
