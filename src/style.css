@@ -1,0 +1,35 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.category-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  color: #c00;
+  border-bottom: 1px solid #ccc;
+}
+
+.item-row {
+  margin: 0.5rem 0;
+}
+
+.item-row .inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
