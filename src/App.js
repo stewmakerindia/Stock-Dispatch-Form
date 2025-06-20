@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 const stockItems = [
@@ -12,30 +11,36 @@ const stockItems = [
 ];
 
 const App = () => {
-  const [date, setDate] = useState(() => new Date().toISOString().substr(0, 10));
+  const [date, setDate] = useState(() => new Date().toISOString().substring(0, 10));
   const [data, setData] = useState({});
 
-  const handleChange = (item, outlet, value) => {
+  const handleChange = (key, value) => {
     setData(prev => ({
       ...prev,
-      [item.name + "-" + outlet]: value
+      [key]: value
     }));
   };
 
   const generateMessage = () => {
-    let msg = `Stock Dispatch Report\nDate: ${date}\n\n`;
+    let message = `Stock Dispatch Report\nDate: ${date}\n\n`;
     stockItems.forEach(item => {
       if (item.type === "header") {
-        msg += `\n== ${item.label} ==\n`;
+        message += `\n== ${item.label} ==\n`;
       } else {
-        const y = data[item.name + "-Yelahanka"] || 0;
-        const t = data[item.name + "-Thanisandra"] || 0;
-        const k = data[item.name + "-Kammanahalli"] || 0;
-        const i = data[item.name + "-Indiranagar"] || 0;
-        msg += `${item.name} (${item.unit}): Yel ${y}, Tha ${t}, Kam ${k}, Ind ${i}\n`;
+        const outlets = ["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"];
+        const line = outlets.map(outlet => {
+          const key = item.name + "-" + outlet;
+          return `${outlet.slice(0, 3)}: ${data[key] || 0}`;
+        }).join(", ");
+        message += `${item.name} (${item.unit}): ${line}\n`;
       }
     });
-    return encodeURIComponent(msg);
+    return encodeURIComponent(message);
+  };
+
+  const openWhatsApp = () => {
+    const url = "https://wa.me/?text=" + generateMessage();
+    window.open(url, "_blank");
   };
 
   return (
@@ -50,22 +55,22 @@ const App = () => {
         <div key={idx} className="item-row">
           <div>{item.name} ({item.unit})</div>
           <div className="inputs">
-            {["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"].map(outlet => (
-              <input
-                key={outlet}
-                type="number"
-                placeholder={outlet}
-                value={data[item.name + "-" + outlet] || ""}
-                onChange={e => handleChange(item, outlet, e.target.value)}
-              />
-            ))}
+            {["Yelahanka", "Thanisandra", "Kammanahalli", "Indiranagar"].map(outlet => {
+              const key = item.name + "-" + outlet;
+              return (
+                <input
+                  key={key}
+                  type="number"
+                  placeholder={outlet}
+                  value={data[key] || ""}
+                  onChange={e => handleChange(key, e.target.value)}
+                />
+              );
+            })}
           </div>
         </div>
       ))}
-      <button onClick={() => {
-        const url = "https://wa.me/?text=" + generateMessage();
-        window.open(url, "_blank");
-      }}>Send on WhatsApp</button>
+      <button onClick={openWhatsApp}>Send on WhatsApp</button>
     </div>
   );
 };
